@@ -3,6 +3,7 @@
 import argparse
 import os
 import sys
+import json
 import anthropic
 
 MODEL_MAPPING = {
@@ -12,15 +13,30 @@ MODEL_MAPPING = {
     "haiku3": "claude-3-haiku-20240307"
 }
 
+def load_systems(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as f:
+            return json.load(f)
+    return {}
+
 def main():
+    # Load systems from JSON file
+    systems = load_systems('systems.json')
+
     parser = argparse.ArgumentParser(description="Command-line interface for Claude API")
     parser.add_argument("text", help="The text to send to Claude")
-    parser.add_argument("--system", help="Optional system message to set context", default="")
+    parser.add_argument("--system", help="System message or predefined system name", default="")
     parser.add_argument("--model", help="Model to use", default="sonnet35",
                         choices=MODEL_MAPPING.keys())
     parser.add_argument("--verbose", action="store_true", help="Print additional information")
     
     args = parser.parse_args()
+
+    # Check if the system arg is a predefined system name
+    if args.system in systems:
+        system_message = systems[args.system]
+    else:
+        system_message = args.system
 
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
@@ -32,20 +48,19 @@ def main():
     try:
         if args.verbose:
             print(f"Using model: {MODEL_MAPPING[args.model]}")
-            print(f"System message: {args.system}")
+            print(f"System message: {system_message}")
             print(f"User message: {args.text}")
             print("Sending request to Claude...")
 
         response = client.messages.create(
             model=MODEL_MAPPING[args.model],
             max_tokens=1000,
-            system=args.system,
+            system=system_message,
             messages=[
                 {"role": "user", "content": args.text}
             ]
         )
 
-        print("Claude's response:")
         print(response.content[0].text)
 
     except Exception as e:
