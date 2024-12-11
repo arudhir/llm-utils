@@ -1,0 +1,22 @@
+digraph Glycolysis {
+    rankdir=LR;
+    node [shape=box, style=filled, fillcolor=lightgray, fontname="Arial", fontsize=14];
+    edge [arrowhead=vee];
+
+    "Glucose" -> "Glucose 6-phosphate" [label="Hexokinase"];
+    "Glucose 6-phosphate" -> "Fructose 6-phosphate" [label="Phosphoglucose\nisomerase"];
+    "Fructose 6-phosphate" -> "Fructose 1,6-bisphosphate" [label="Phosphofructokinase-1"];
+    "Fructose 1,6-bisphosphate" -> "Glyceraldehyde 3-phosphate" [label="Aldolase"];
+    "Glyceraldehyde 3-phosphate" -> "1,3-Bisphosphoglycerate" [label="Glyceraldehyde 3-phosphate\ndehydrogenase"];
+    "1,3-Bisphosphoglycerate" -> "3-Phosphoglycerate" [label="Phosphoglycerate kinase"];
+    "3-Phosphoglycerate" -> "2-Phosphoglycerate" [label="Phosphoglycerate mutase"];
+    "2-Phosphoglycerate" -> "Phosphoenolpyruvate" [label="Enolase"];
+    "Phosphoenolpyruvate" -> "Pyruvate" [label="Pyruvate kinase"];
+    "Pyruvate" [shape=box3d];
+
+    {rank=same; "Glucose"; "Glucose 6-phosphate"}
+    {rank=same; "Fructose 6-phosphate"; "Fructose 1,6-bisphosphate"}
+    {rank=same; "Glyceraldehyde 3-phosphate"}
+    {rank=same; "1,3-Bisphosphoglycerate"; "3-Phosphoglycerate"}
+    {rank=same; "2-Phosphoglycerate"; "Phosphoenolpyruvate"; "Pyruvate"}
+}

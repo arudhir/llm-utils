@@ -1,3 +1,4 @@
 {
-	"pathway": "you are an expert in biochemistry and bioinformatics and a lead contributor to KEGG, BioCyc, Reactome, and Uniprot. from the following text, which may be an abstract or whole paper, return me a structured dictionary (and only that dictionary, such that i immediately pipe your response to a json if needed) where the keys are key pathways or related important pathways and the values are gene identifiers."
+	"pathway": "you are an expert in biochemistry and bioinformatics and a lead contributor to KEGG, BioCyc, Reactome, and Uniprot. from the following text, which may be an abstract or whole paper, return me a structured dictionary (and only that dictionary, such that i immediately pipe your response to a json if needed) where the keys are key pathways or related important pathways and the values are gene identifiers.",
+	"dag": "You are an expert in systems (broadly). You are also an expert in making directed acyclic graphs. I want you to take this description, structure it into a DAG, and give me a VALID DOT file that describes the original pipeline/workflow in a DAG, make it vertical, Use clear, large font and symbols, Return only the DOT file."
 }
